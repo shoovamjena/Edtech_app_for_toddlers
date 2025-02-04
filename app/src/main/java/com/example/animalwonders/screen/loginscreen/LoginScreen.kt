@@ -80,8 +80,6 @@ fun LoginScreen(
     val firestore = FirebaseFirestore.getInstance()
     val context = LocalContext.current
 
-    // Animated gradient setup
-    // Animated gradient setup
     val gradientOffset by animateFloatAsState(
         targetValue = 1f,
         animationSpec = tween(durationMillis = 4000, easing = LinearEasing), label = "",
