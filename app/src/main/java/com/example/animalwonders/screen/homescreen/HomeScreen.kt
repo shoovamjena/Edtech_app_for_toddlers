@@ -13,16 +13,15 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
@@ -30,9 +29,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -56,22 +52,30 @@ import com.example.animalwonders.ui.theme.PrimaryPink
 import com.example.animalwonders.ui.theme.PrimaryPinkBlended
 import com.example.animalwonders.ui.theme.PrimaryPinkDark
 import com.example.animalwonders.ui.theme.PrimaryVioletDark
-import com.example.animalwonders.ui.theme.PrimaryVioletLight
 import com.example.animalwonders.uicomponents.home.TimeBasedGreeting
 import com.example.animalwonders.uicomponents.home.moduleButton
-import com.example.animalwonders.uicomponents.welcome.welcomeButton
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import com.example.animalwonders.R
 import com.example.animalwonders.uicomponents.home.bottomBarNav
+import com.example.animalwonders.viewmodel.AnimalViewModel
+import androidx.compose.runtime.livedata.observeAsState
+
+
+
 
 @Composable
 fun HomeScreen(
+    viewModel: AnimalViewModel,
     modifier: Modifier = Modifier,
     navController: NavController,
     onLogout: () -> Unit
 ){
+
+    val wildAnimals by viewModel.animals.observeAsState(emptyList())
+    val domesticAnimals by viewModel.animals.observeAsState(emptyList())
+
     val auth = FirebaseAuth.getInstance()
     val firestore = FirebaseFirestore.getInstance()
 
@@ -105,6 +109,10 @@ fun HomeScreen(
                 Toast.makeText(navController.context, "Failed to fetch user data", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    LaunchedEffect(selectedModule) {
+        viewModel.fetchAnimalsByCategory(selectedModule)
     }
 
     Scaffold(
@@ -181,7 +189,10 @@ fun HomeScreen(
             ) {
                 moduleButton(
                     text = "WILD",
-                    onclicked = { selectedModule = "WILD" },
+                    onclicked = {
+                        selectedModule = "WILD"
+                        viewModel.fetchAnimalsByCategory("WILD")
+                        },
                     color = ButtonDefaults.buttonColors(
                         containerColor = if (selectedModule == "WILD") PrimaryPinkDark else Color.White,
                         contentColor = if (selectedModule == "WILD") Color.White else PrimaryPinkDark
@@ -192,7 +203,10 @@ fun HomeScreen(
                 Spacer(modifier = Modifier.weight(1f))
                 moduleButton(
                     text = "DOMESTIC",
-                    onclicked = { selectedModule = "DOMESTIC" },
+                    onclicked = {
+                        selectedModule = "DOMESTIC"
+                        viewModel.fetchAnimalsByCategory("DOMESTIC")
+                        },
                     color = ButtonDefaults.buttonColors(
                         containerColor = if (selectedModule == "DOMESTIC") PrimaryPinkDark else Color.White,
                         contentColor = if (selectedModule == "DOMESTIC") Color.White else PrimaryPinkDark
@@ -210,7 +224,21 @@ fun HomeScreen(
                     .padding(horizontal = 14.dp)
                     .clip(RoundedCornerShape(24.dp))
                     .background(Color.White.copy(alpha = 0.7f))
-            ){}
+            ){
+                // Animal Grid
+                if (selectedModule == "WILD") {
+                    AnimalGrid(
+                        animals = wildAnimals,
+                        deleteAnimal = { animal -> viewModel.deleteAnimal(animal) }
+                    )
+                } else {
+                    AnimalGrid(
+                        animals = domesticAnimals,
+                        deleteAnimal = { animal -> viewModel.deleteAnimal(animal) }
+                    )
+                }
+
+            }
 
         }
     }

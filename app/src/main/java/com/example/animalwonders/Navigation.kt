@@ -1,6 +1,7 @@
 package com.example.animalwonders
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -9,6 +10,7 @@ import com.example.animalwonders.screen.homescreen.HomeScreen
 import com.example.animalwonders.screen.loginscreen.LoginScreen
 import com.example.animalwonders.screen.signupscreen.SignupScreen
 import com.example.animalwonders.screen.welcomescreen.welcomeScreen
+import com.example.animalwonders.viewmodel.AnimalViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
@@ -30,7 +32,9 @@ fun NavigationGraph(navController: NavHostController) {
 
         // Home Screen
         composable("home_screen") {
+            val animalViewModel: AnimalViewModel = viewModel()
             HomeScreen(
+                viewModel = animalViewModel,
                 onLogout = {
                     auth.signOut()
                     navController.navigate("welcome_screen") {
