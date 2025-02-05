@@ -28,6 +28,7 @@ import com.example.animalwonders.ui.theme.PrimaryPinkDark
 fun bottomBarNav(){
     var selectedItem by remember { mutableStateOf(0) }
 
+
     val items = listOf("Home", "Scan", "Help")
     val selectedIcons = listOf(
         ImageVector.vectorResource(id = R.drawable.home_filled),
@@ -43,7 +44,7 @@ fun bottomBarNav(){
     NavigationBar(
         modifier = Modifier
             .fillMaxWidth()
-            .height(70.dp)
+            .height(80.dp)
             .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)),
         containerColor = PrimaryPinkDark,
         contentColor = PrimaryPinkDark

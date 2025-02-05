@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -78,6 +79,9 @@ fun HomeScreen(
     val userName = remember { mutableStateOf<String?>(null) }
     var expanded by remember { mutableStateOf(false) }
 
+    //for module button
+    var selectedModule by remember { mutableStateOf("WILD") }
+
     val gradientOffset by animateFloatAsState(
         targetValue = 1f,
         animationSpec = tween(durationMillis = 4000, easing = LinearEasing), label = "",
@@ -110,6 +114,7 @@ fun HomeScreen(
         }
 
     ) { paddingValues ->
+
         Column(
             modifier = modifier
                 .fillMaxSize()
@@ -161,7 +166,9 @@ fun HomeScreen(
                                     contentDescription = null,
                                     modifier = Modifier.size(34.dp))
                             },
-                            onClick = {onLogout},
+                            onClick = {
+                                onLogout()
+                                expanded = false },
                         )
                     }
                 }
@@ -174,26 +181,37 @@ fun HomeScreen(
             ) {
                 moduleButton(
                     text = "WILD",
-                    onclicked = { /* Handle Click */ },
+                    onclicked = { selectedModule = "WILD" },
                     color = ButtonDefaults.buttonColors(
-                        containerColor = Color.White,
-                        contentColor = PrimaryVioletDark
+                        containerColor = if (selectedModule == "WILD") PrimaryPinkDark else Color.White,
+                        contentColor = if (selectedModule == "WILD") Color.White else PrimaryPinkDark
                     ),
-                    shadowColor = PrimaryVioletDark,
-                    borderColor = PrimaryVioletDark
+                    shadowColor = PrimaryPinkDark,
+                    borderColor = if (selectedModule == "WILD") Color.White else PrimaryPinkDark
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 moduleButton(
                     text = "DOMESTIC",
-                    onclicked = { /* Handle Click */ },
+                    onclicked = { selectedModule = "DOMESTIC" },
                     color = ButtonDefaults.buttonColors(
-                        containerColor = PrimaryVioletDark,
-                        contentColor = Color.White
+                        containerColor = if (selectedModule == "DOMESTIC") PrimaryPinkDark else Color.White,
+                        contentColor = if (selectedModule == "DOMESTIC") Color.White else PrimaryPinkDark
                     ),
-                    shadowColor = PrimaryVioletDark,
-                    borderColor = PrimaryVioletDark
+                    shadowColor = PrimaryPinkDark,
+                    borderColor = if (selectedModule == "DOMESTIC") Color.White else PrimaryPinkDark
                 )
             }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .weight(0.5f)
+                    .padding(top = 24.dp)
+                    .padding(horizontal = 14.dp)
+                    .clip(RoundedCornerShape(24.dp))
+                    .background(Color.White.copy(alpha = 0.7f))
+            ){}
+
         }
     }
 }
