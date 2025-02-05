@@ -32,7 +32,7 @@ fun welcomeButton(
     shadowColor: Color
 ){
     Button(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(62.dp)
             .padding(horizontal = 15.dp)
