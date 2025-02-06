@@ -3,9 +3,13 @@ package com.example.animalwonders
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.animalwonders.room.AnimalRepository
+import com.example.animalwonders.screen.animaldetailscreen.AnimalDetailScreen
 import com.example.animalwonders.screen.homescreen.HomeScreen
 import com.example.animalwonders.screen.loginscreen.LoginScreen
 import com.example.animalwonders.screen.signupscreen.SignupScreen
@@ -14,7 +18,7 @@ import com.example.animalwonders.viewmodel.AnimalViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
-fun NavigationGraph(navController: NavHostController) {
+fun NavigationGraph(navController: NavHostController, animalViewModel: AnimalViewModel ) {
     val navController = rememberNavController()
 
     // Firebase Auth instance to check the login state
@@ -54,6 +58,16 @@ fun NavigationGraph(navController: NavHostController) {
         // Login Screen
         composable("login_screen") {
             LoginScreen(navController = navController)
+        }
+
+        //AnimalDetailScreen
+        composable(
+            "animal_detail/{animalId}",
+            arguments = listOf(navArgument("animalId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val animalId = backStackEntry.arguments?.getInt("animalId") ?: return@composable
+            // Passing the repository to the AnimalDetailScreen
+            AnimalDetailScreen(animalId, animalViewModel)
         }
     }
 }

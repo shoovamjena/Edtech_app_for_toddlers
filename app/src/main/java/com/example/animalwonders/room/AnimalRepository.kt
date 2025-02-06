@@ -15,4 +15,8 @@ class AnimalRepository(val animalDao: AnimalDao) {
     suspend fun deleteAnimal(animal: Animal) {
         animalDao.deleteAnimal(animal.id)
     }
+
+     fun getAnimalById(animalId: Int): Animal {
+        return animalDao.getAnimalById(animalId)
+    }
 }

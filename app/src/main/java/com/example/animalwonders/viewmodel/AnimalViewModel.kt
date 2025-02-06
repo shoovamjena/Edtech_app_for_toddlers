@@ -26,6 +26,10 @@ class AnimalViewModel(application: Application) : AndroidViewModel(application) 
     private val _animals = MutableLiveData<List<Animal>>()
     val animals: LiveData<List<Animal>> get() = _animals
 
+    private val _selectedAnimal = MutableLiveData<Animal?>()
+    val selectedAnimal: LiveData<Animal?> get() = _selectedAnimal
+
+
     private fun addStaticAnimals() {
         viewModelScope.launch(Dispatchers.IO) {
             // Check if there are any animals in the WILD category
@@ -67,6 +71,14 @@ class AnimalViewModel(application: Application) : AndroidViewModel(application) 
     fun deleteAnimal(animal: Animal) {
         viewModelScope.launch {
             animalRepository.deleteAnimal(animal)
+        }
+    }
+
+    fun fetchAnimalById(id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val fetchedAnimal = animalRepository.getAnimalById(id)
+            // Post the animal result to LiveData
+            _selectedAnimal.postValue(fetchedAnimal)
         }
     }
 

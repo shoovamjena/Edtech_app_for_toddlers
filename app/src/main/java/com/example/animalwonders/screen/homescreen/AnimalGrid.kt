@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.animalwonders.room.Animal
 import com.example.animalwonders.viewmodel.AnimalViewModel
@@ -22,7 +23,8 @@ import com.example.animalwonders.viewmodel.AnimalViewModel
 @Composable
 fun AnimalGrid(
     animals: List<Animal>,
-    deleteAnimal: (Animal) -> Unit
+    deleteAnimal: (Animal) -> Unit,
+    navController: NavController
 ) {
 
     LazyVerticalGrid(
@@ -34,7 +36,7 @@ fun AnimalGrid(
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         items(animals) { animal ->
-            AnimalCard(animal = animal, deleteAnimal = deleteAnimal)
+            AnimalCard(animal = animal, deleteAnimal = deleteAnimal, navController = navController)
         }
     }
 }
@@ -42,7 +44,8 @@ fun AnimalGrid(
 @Composable
 fun AnimalCard(
     animal: Animal,
-    deleteAnimal: (Animal) -> Unit
+    deleteAnimal: (Animal) -> Unit,
+    navController: NavController
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -57,7 +60,7 @@ fun AnimalCard(
                 .size(80.dp)
                 .clip(CircleShape)
                 .clickable {
-                    deleteAnimal(animal) // Delete the animal when image is clicked
+                    navController.navigate("animal_detail/${animal.id}") // Delete the animal when image is clicked
                 }
         )
         Spacer(modifier = Modifier.height(8.dp))

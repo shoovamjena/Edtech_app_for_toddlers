@@ -229,12 +229,14 @@ fun HomeScreen(
                 if (selectedModule == "WILD") {
                     AnimalGrid(
                         animals = wildAnimals,
-                        deleteAnimal = { animal -> viewModel.deleteAnimal(animal) }
+                        deleteAnimal = { animal -> viewModel.deleteAnimal(animal)},
+                        navController = navController
                     )
                 } else {
                     AnimalGrid(
                         animals = domesticAnimals,
-                        deleteAnimal = { animal -> viewModel.deleteAnimal(animal) }
+                        deleteAnimal = { animal -> viewModel.deleteAnimal(animal) },
+                        navController = navController
                     )
                 }
 
