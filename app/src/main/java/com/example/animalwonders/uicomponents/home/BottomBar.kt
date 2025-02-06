@@ -19,13 +19,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.animalwonders.R
 import com.example.animalwonders.ui.theme.PrimaryPink
 import com.example.animalwonders.ui.theme.PrimaryPinkBlended
 import com.example.animalwonders.ui.theme.PrimaryPinkDark
 
 @Composable
-fun bottomBarNav(){
+fun bottomBarNav(navController: NavController){
     var selectedItem by remember { mutableStateOf(0) }
 
 
@@ -59,7 +60,12 @@ fun bottomBarNav(){
                     )
                 },
                 selected = selectedItem == index,
-                onClick = { selectedItem = index },
+                onClick = {
+                    selectedItem = index
+                    if (label == "Home") {
+                        navController.navigate("home_screen")
+                    }
+                },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = PrimaryPinkDark,
                     unselectedIconColor = Color.White.copy(alpha = 0.85f),

@@ -67,7 +67,7 @@ fun NavigationGraph(navController: NavHostController, animalViewModel: AnimalVie
         ) { backStackEntry ->
             val animalId = backStackEntry.arguments?.getInt("animalId") ?: return@composable
             // Passing the repository to the AnimalDetailScreen
-            AnimalDetailScreen(animalId, animalViewModel)
+            AnimalDetailScreen(animalId, animalViewModel,navController)
         }
     }
 }

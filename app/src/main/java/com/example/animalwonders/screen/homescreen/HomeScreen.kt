@@ -118,7 +118,7 @@ fun HomeScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            bottomBarNav()
+            bottomBarNav(navController)
         }
 
     ) { paddingValues ->
@@ -128,7 +128,6 @@ fun HomeScreen(
                 .fillMaxSize()
                 .background(animatedBrush)
                 .systemBarsPadding()
-                .padding(vertical = 30.dp)
                 .padding(paddingValues),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {

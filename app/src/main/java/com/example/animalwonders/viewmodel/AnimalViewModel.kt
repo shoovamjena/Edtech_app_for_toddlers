@@ -37,9 +37,9 @@ class AnimalViewModel(application: Application) : AndroidViewModel(application) 
             if (wildAnimals.isEmpty()) {
                 // Add static wild animals if no wild animals exist in the database
                 val staticWildAnimals = listOf(
-                    Animal(name = "Lion", imageResId = R.drawable.lion, category = "WILD", description = "This is a lion"),
-                    Animal(name = "Tiger", imageResId = R.drawable.tiger, category = "WILD", description = "This is a tiger"),
-                    Animal(name = "Elephant", imageResId = R.drawable.elephant, category = "WILD", description = "This is an elephant")
+                    Animal(name = "Lion", imageResId = R.drawable.lion, category = "WILD", description = "The king of the jungle with a majestic golden mane and a powerful roar.", food = "Carnivore", color = "Golden"),
+                    Animal(name = "Tiger", imageResId = R.drawable.tiger, category = "WILD", description = "A big cat with orange fur and bold black stripes, known for its stealthy movements.", food = "Carnivore", color = "Orange with black stripes"),
+                    Animal(name = "Elephant", imageResId = R.drawable.elephant, category = "WILD", description = "The largest land animal with a long trunk, big ears, and thick grey skin.", food = "Herbivore", color = "Grey")
                 )
                 staticWildAnimals.forEach { animal ->
                     animalRepository.addAnimal(animal)
@@ -51,8 +51,8 @@ class AnimalViewModel(application: Application) : AndroidViewModel(application) 
             if (domesticAnimals.isEmpty()) {
                 // Add static domestic animals if no domestic animals exist in the database
                 val staticDomesticAnimals = listOf(
-                    Animal(name = "Dog", imageResId = R.drawable.dog, category = "DOMESTIC", description = "This is a dog"),
-                    Animal(name = "Cat", imageResId = R.drawable.cat, category = "DOMESTIC", description = "This is a cat")
+                    Animal(name = "Dog", imageResId = R.drawable.dog, category = "DOMESTIC", description = "A loyal and friendly animal known as a human's best friend, with a wagging tail.", food = "Omnivore", color = "Many colours"),
+                    Animal(name = "Cat", imageResId = R.drawable.cat, category = "DOMESTIC", description = "A cute and curious pet with soft fur, sharp claws, and a playful nature.", food = "Omnivore", color = "Many colours")
                 )
                 staticDomesticAnimals.forEach { animal ->
                     animalRepository.addAnimal(animal)

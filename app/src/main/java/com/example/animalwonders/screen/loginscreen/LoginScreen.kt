@@ -283,7 +283,8 @@ private fun Separator(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ){
         DashedLine(
-            modifier = Modifier.weight(weight = 1f)
+            modifier = Modifier.weight(weight = 1f),
+            color = Color.White
         )
         Text(
             text = "or",
@@ -291,23 +292,25 @@ private fun Separator(
             color = Color.White
         )
         DashedLine(
-            modifier = Modifier.weight(weight = 1f)
+            modifier = Modifier.weight(weight = 1f),
+            color = Color.White
         )
     }
 }
 
 @Composable
-private fun DashedLine(
-    modifier: Modifier = Modifier
+fun DashedLine(
+    modifier: Modifier = Modifier,
+    color: Color
 ){
     Canvas(modifier = modifier) {
         drawLine(
-            color = Color.White,
+            color = color,
             start = Offset(0f,0f),
             end = Offset(size.width,0f),
             pathEffect = PathEffect.dashPathEffect(floatArrayOf(8f,8f),0f),
             cap = StrokeCap.Round,
-            strokeWidth = 1.dp.toPx()
+            strokeWidth = 2.dp.toPx()
         )
     }
 }

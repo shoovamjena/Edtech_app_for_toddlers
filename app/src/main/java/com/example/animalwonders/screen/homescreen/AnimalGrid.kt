@@ -60,7 +60,7 @@ fun AnimalCard(
                 .size(80.dp)
                 .clip(CircleShape)
                 .clickable {
-                    navController.navigate("animal_detail/${animal.id}") // Delete the animal when image is clicked
+                    navController.navigate("animal_detail/${animal.id}")
                 }
         )
         Spacer(modifier = Modifier.height(8.dp))

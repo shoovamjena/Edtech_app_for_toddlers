@@ -9,6 +9,8 @@ data class Animal(
     val name: String,
     val description: String,
     val imageResId: Int,
-    val category: String
+    val category: String,
+    val food: String,
+    val color: String
 )
 
